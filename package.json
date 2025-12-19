@@ -40,7 +40,6 @@
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",
     "github-action-readme-generator": "^1.8.5",
-    "husky": "^6.0.0",
     "lint-staged": "^11.1.4",
     "prettier": "^2.7.1",
     "tap": "^16.3.0"
