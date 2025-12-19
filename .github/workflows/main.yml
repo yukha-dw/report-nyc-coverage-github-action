@@ -6,10 +6,16 @@ jobs:
     name: Test and report
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1000
+
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.21.1'
+          cache: 'npm'
 
       - name: Fetch base
         run: git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1000
@@ -20,14 +26,15 @@ jobs:
           npm run test
 
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v6
         with:
           name: test-coverage-output
           path: coverage
 
       - name: Download coverage artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v6
         with:
+          name: test-coverage-output
           path: artifacts
 
       - name: Get Run ID
@@ -43,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2.24.2
+        uses: dawidd6/action-download-artifact@v11
         continue-on-error: true
         with:
           workflow: ${{ github.event.pull_request.base.ref == 'main' && 'default-branch.yml' || 'main.yml' }}
@@ -54,7 +61,7 @@ jobs:
 
       - name: Check file existence
         id: check_files
-        uses: andstor/file-existence-action@v1
+        uses: andstor/file-existence-action@v3
         with:
           files: 'base-artifacts/coverage-summary.json'
 
@@ -62,6 +69,6 @@ jobs:
         uses: ./
         id: report
         with:
-          coverage_file: 'artifacts/test-coverage-output/coverage-summary.json'
+          coverage_file: 'artifacts/coverage-summary.json'
           base_coverage_file: ${{steps.check_files.outputs.files_exists == 'true' && 'base-artifacts/coverage-summary.json' || ''}}
           comment_template_file: 'comment-template.svelte'
