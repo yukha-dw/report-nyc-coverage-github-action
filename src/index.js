@@ -140,7 +140,7 @@ async function getChangedFiles() {
   const { base, head } = github.context.payload.pull_request;
 
   const diffCommand = await exec.getExecOutput(
-    `git diff --name-only --diff-filter=ACMRT origin/${base.ref}...${head.sha}`,
+    `git diff --name-only --diff-filter=ACMRT origin/${base.ref}...${head.sha} -- .`,
     [],
     {
       ignoreReturnCode: true,
