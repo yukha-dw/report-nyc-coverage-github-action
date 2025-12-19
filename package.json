@@ -33,13 +33,13 @@
   },
   "homepage": "https://github.com/sidx1024/coverage-reporter-action#readme",
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/exec": "^1.1.1",
-    "@actions/github": "^5.1.1"
+    "@actions/core": "^2.0.1",
+    "@actions/exec": "^2.0.0",
+    "@actions/github": "^6.0.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",
-    "github-action-readme-generator": "^1.2.7",
+    "github-action-readme-generator": "^1.8.5",
     "husky": "^6.0.0",
     "lint-staged": "^11.1.4",
     "prettier": "^2.7.1",
